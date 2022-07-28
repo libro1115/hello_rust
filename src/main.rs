@@ -10,10 +10,13 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)//mutがないと参照先で不変になる
             .expect("Failed to read line");//失敗時処理
-        let guess:u32 = guess//シャドーイング（名前の再利用。元の変数は消えてない
+        let guess:u32 = match guess//シャドーイング（名前の再利用。元の変数は消えてない
                         .trim()//文字列から\n等を消す
                         .parse()//数値に変換
-                        .expect("Please type a number");//エラー処理
+                        {   //エラー処理
+                            Ok(num) => num,//perseの返り値Result型はOkとErrを持つ列挙型
+                            Err(_) => continue,//アンダースコア_はすべての値を受け付ける
+                        };
 
         println!("you guessd: {}", guess);
 
