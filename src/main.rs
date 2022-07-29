@@ -1,34 +1,32 @@
-use std::io;//入出力ライブラリ
-use rand::Rng;
-use std::cmp::Ordering;
-fn main() {
-    println!("Guess the number");
-    let secret_number = rand::thread_rng().gen_range(1..101);//1～100間での乱数を生成
-    loop{
-        println!("please input number");
-        let mut guess = String::new();//letは変数宣言mutは変数が可変であることを示す
-        io::stdin()
-            .read_line(&mut guess)//mutがないと参照先で不変になる
-            .expect("Failed to read line");//失敗時処理
-        let guess:u32 = match guess//シャドーイング（名前の再利用。元の変数は消えてない
-                        .trim()//文字列から\n等を消す
-                        .parse()//数値に変換
-                        {   //エラー処理
-                            Ok(num) => num,//perseの返り値Result型はOkとErrを持つ列挙型
-                            Err(_) => continue,//アンダースコア_はすべての値を受け付ける
-                        };
 
-        println!("you guessd: {}", guess);
-
-        match guess.cmp(&secret_number)
-        {
-            Ordering::Less => println!("Too small"),
-            Ordering::Greater => println!("Too big"),
-            Ordering::Equal => 
-            {
-                println!("Jackpot!");
-                break;
-            },
-        }
+#[derive(Debug)]
+struct Rectangle
+{
+    width:u32,
+    height:u32,
+}
+impl Rectangle
+{
+    fn area(&self)->u32
+    {
+        self.width * self.height
     }
+    fn can_hold(&self, other:&Rectangle)->bool
+    {
+        self.width > other.width && self.height > other.height
+    }
+    fn square(size:u32)->Rectangle
+    {
+        Rectangle { width: size, height: size }
+    }
+}
+fn main() {
+    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect2 = Rectangle { width: 10, height: 40 };
+    let rect3 = Rectangle { width: 60, height: 45 };
+
+    // rect1にrect2ははまり込む？
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
+    println!("Rect1 Size{}",rect1.area());
 }
