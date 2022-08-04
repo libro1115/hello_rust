@@ -1,5 +1,6 @@
 mod Rectangle;
 
+use crate::Rectangle::Polygon;
 use crate::Rectangle::Rectangle as Rect;
 //#[derive(Debug)]
 fn main() {
