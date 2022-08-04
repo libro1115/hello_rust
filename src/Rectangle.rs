@@ -1,20 +1,34 @@
+pub trait  Polygon{
+    fn area(&self)->u32;
+    fn corners(&self)->i32;
+    fn can_hold<T:Polygon>(&self, other:&T)->bool;
+    fn width(&self)->u32;
+    fn height(&self)->u32;
+}
+
 pub struct Rectangle
 {
-   pub  width:u32,
+   pub width:u32,
    pub height:u32,
 }
-impl Rectangle
+impl Polygon for Rectangle
 {
-    pub fn area(&self)->u32
+    fn area(&self)->u32
     {
         self.width * self.height
     }
-    pub fn can_hold(&self, other:&Rectangle)->bool
+    fn corners(&self)->i32 
     {
-        self.width > other.width && self.height > other.height
+        2
     }
-    pub fn square(size:u32)->Rectangle
+    fn can_hold<T :Polygon>(&self, other:&T)->bool
     {
-        Rectangle { width: size, height: size }
+        self.width > other.width() && self.height > other.height()
+    }
+    fn width(&self)->u32 {
+        self.width
+    }
+    fn height(&self)->u32 {
+        self.height
     }
 }
