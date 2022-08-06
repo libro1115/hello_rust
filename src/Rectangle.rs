@@ -48,7 +48,7 @@ mod rect_test
             width: 60,
             height: 45,
         };
-        assert_eq!(rect1.area(), 1500);
+        assert_eq!(rect1.area(), 1500, "error_message1");
         assert_eq!(rect1.can_hold(&rect2), true);
         assert_eq!(rect1.can_hold(&rect3), false);
     }
